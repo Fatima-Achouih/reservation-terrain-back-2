@@ -12,4 +12,5 @@ public interface TerrainRepository extends JpaRepository<Terrain, Long> {
 
 	
 	Terrain findById(String id);
+	
 }

@@ -64,6 +64,21 @@ for(Reservation r: ters) {
 		}
 		return events;
 	}
+
+	@Override
+	public List<Event> getResByTer(String id) {
+		List<Event> events = new ArrayList<>();
+		List<Reservation>ters=res.findAllByTerrId(id);
+for(Reservation r: ters) {
+			
+			Event ev = new Event();
+			
+			BeanUtils.copyProperties(r, ev);
+		
+			events.add(ev);
+		}
+		return events;
+	}
 	
 	
 

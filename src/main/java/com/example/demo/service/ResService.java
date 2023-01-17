@@ -11,4 +11,6 @@ public interface ResService {
 
 	List<Event> getres();
 
+	List<Event> getResByTer(String id);
+
 }
