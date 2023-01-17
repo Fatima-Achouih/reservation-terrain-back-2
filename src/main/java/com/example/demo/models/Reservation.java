@@ -2,9 +2,11 @@ package com.example.demo.models;
 
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -32,6 +34,27 @@ public class Reservation {
 	private String hi;
 	private String hf;
 	
+	
+	private String terrId;
+	
+	@ManyToOne
+	private Terrain ter;
+	
+	
+	
+	
+	public String getTerrId() {
+		return terrId;
+	}
+	public void setTerrId(String terrId) {
+		this.terrId = terrId;
+	}
+	public Terrain getTer() {
+		return ter;
+	}
+	public void setTer(Terrain ter) {
+		this.ter = ter;
+	}
 	public String getStart() {
 		return start;
 	}

@@ -12,6 +12,7 @@ import com.example.demo.models.Event;
 import com.example.demo.models.Reservation;
 
 import com.example.demo.repository.ResRepository;
+import com.example.demo.repository.TerrainRepository;
 import com.example.demo.service.ResService;
 
 
@@ -19,6 +20,8 @@ import com.example.demo.service.ResService;
 public class ResServiceImp implements ResService {
 	@Autowired
 	ResRepository res;
+	@Autowired
+	TerrainRepository tr;
 
 	@Override
 	public Reservation createRes(Reservation resRequest) {
@@ -36,6 +39,10 @@ public class ResServiceImp implements ResService {
 	    
 	    r.setStart(resRequest.getDate()+"T"+resRequest.getHi());
 	    r.setEnd(resRequest.getDate()+"T"+resRequest.getHf());
+	    
+	    r.setTerrId(resRequest.getTerrId());
+	    
+	    r.setTer(tr.findById(resRequest.getTerrId()));
 		
 		Reservation newR = res.save(r);
 		
