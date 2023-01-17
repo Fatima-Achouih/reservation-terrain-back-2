@@ -41,8 +41,23 @@ public class Reservation {
 	private Terrain ter;
 	
 	
+	private String borderColor;
+	private String backgroundColor;
 	
 	
+	
+	public String getBorderColor() {
+		return borderColor;
+	}
+	public void setBorderColor(String borderColor) {
+		this.borderColor = borderColor;
+	}
+	public String getBackgroundColor() {
+		return backgroundColor;
+	}
+	public void setBackgroundColor(String backgroundColor) {
+		this.backgroundColor = backgroundColor;
+	}
 	public String getTerrId() {
 		return terrId;
 	}

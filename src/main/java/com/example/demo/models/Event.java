@@ -12,8 +12,24 @@ public class Event implements Serializable {
 	private String title;
 	private String start;
 	private String end;
+	private String borderColor;
+	private String backgroundColor;
+	
+	
 
 	
+	public String getBorderColor() {
+		return borderColor;
+	}
+	public void setBorderColor(String borderColor) {
+		this.borderColor = borderColor;
+	}
+	public String getBackgroundColor() {
+		return backgroundColor;
+	}
+	public void setBackgroundColor(String backgroundColor) {
+		this.backgroundColor = backgroundColor;
+	}
 	public String getTitle() {
 		return title;
 	}

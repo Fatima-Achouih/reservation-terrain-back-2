@@ -27,7 +27,7 @@ public class ResServiceImp implements ResService {
 	public Reservation createRes(Reservation resRequest) {
 		
 		Reservation r = new Reservation();
-		r.setTitle("TITLE");
+		r.setTitle("Réservé");
 		
 		r.setNom(resRequest.getNom());
 		r.setEmail(resRequest.getEmail());
@@ -43,6 +43,10 @@ public class ResServiceImp implements ResService {
 	    r.setTerrId(resRequest.getTerrId());
 	    
 	    r.setTer(tr.findById(resRequest.getTerrId()));
+	    
+	    
+	    r.setBackgroundColor("rgb(234,220,249)");
+		r.setBorderColor("#8732de");
 		
 		Reservation newR = res.save(r);
 		
