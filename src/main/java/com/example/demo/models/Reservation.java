@@ -15,16 +15,26 @@ public class Reservation {
 	@Id
 	@GeneratedValue
 	private long id;
+	
+	
+	private String title;
+	
+	
 	private String nom;
 	private String email;
 	private String tel;
-	private String title;
+	
 	private String start;
 	private String end;
+	
 	private String date;
+	
 	private String hi;
 	private String hf;
 	
+	public String getStart() {
+		return start;
+	}
 	public long getId() {
 		return id;
 	}
@@ -49,15 +59,7 @@ public class Reservation {
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	public String getStart() {
-		return start;
-	}
+	
 	public void setStart(String start) {
 		this.start = start;
 	}
@@ -84,6 +86,12 @@ public class Reservation {
 	}
 	public void setHf(String hf) {
 		this.hf = hf;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	
 	

@@ -22,7 +22,22 @@ public class ResServiceImp implements ResService {
 
 	@Override
 	public Reservation createRes(Reservation resRequest) {
-		Reservation newR = res.save(resRequest);
+		
+		Reservation r = new Reservation();
+		r.setTitle("TITLE");
+		
+		r.setNom(resRequest.getNom());
+		r.setEmail(resRequest.getEmail());
+	    r.setTel(resRequest.getTel());
+	    
+	    r.setDate(resRequest.getDate());
+	    r.setHi(resRequest.getHi());
+	    r.setHf(resRequest.getHf());
+	    
+	    r.setStart(resRequest.getDate()+"T"+resRequest.getHi());
+	    r.setEnd(resRequest.getDate()+"T"+resRequest.getHf());
+		
+		Reservation newR = res.save(r);
 		
 		return newR;
 	}
