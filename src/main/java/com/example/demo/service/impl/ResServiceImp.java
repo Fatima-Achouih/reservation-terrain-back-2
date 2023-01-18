@@ -5,8 +5,10 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,7 @@ public class ResServiceImp implements ResService {
 	
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:MM");
 	DateFormat formatter = new SimpleDateFormat("HH:mm");
-
+	DateTimeFormatter form = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	@Override
 	public ResponseEntity<Reservation> createRes(Reservation resRequest) {
 		
@@ -44,7 +46,7 @@ public class ResServiceImp implements ResService {
 	    r.setTel(resRequest.getTel());
 	    
 	    //compaire hi/hf
-	    r.setDate(resRequest.getDate());
+	    
 	    
 	    try {
 			java.sql.Time d = new java.sql.Time(formatter.parse(resRequest.getHi()).getTime());
@@ -61,6 +63,17 @@ public class ResServiceImp implements ResService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	    
+	    //compaire date
+	    
+	   
+	    LocalDate date = LocalDate.parse(resRequest.getDate(), form);
+	    
+	    if(date.isBefore(java.time.LocalDate.now())) {
+	    	throw new UsernameNotFoundException("Entrez une date valide");
+	    }
+	    r.setDate(resRequest.getDate());
+	    
 	    r.setHi(resRequest.getHi());
 	    r.setHf(resRequest.getHf());
 	    
