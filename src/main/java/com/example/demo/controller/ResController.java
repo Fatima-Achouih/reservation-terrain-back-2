@@ -36,10 +36,11 @@ public class ResController {
 
 		
 
-		Reservation res = rs.createRes(resRequest);
+		//Reservation res = rs.createRes(resRequest);
+		
 		
 
-		return new ResponseEntity<Reservation>(res,HttpStatus.CREATED);
+		return rs.createRes(resRequest);
 	}
 	
 	@GetMapping

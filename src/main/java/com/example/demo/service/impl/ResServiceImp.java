@@ -1,13 +1,20 @@
 package com.example.demo.service.impl;
 
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-
+import com.example.demo.exeption.UsernameNotFoundException;
 import com.example.demo.models.Event;
 import com.example.demo.models.Reservation;
 
@@ -22,9 +29,12 @@ public class ResServiceImp implements ResService {
 	ResRepository res;
 	@Autowired
 	TerrainRepository tr;
+	
+	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:MM");
+	DateFormat formatter = new SimpleDateFormat("HH:mm");
 
 	@Override
-	public Reservation createRes(Reservation resRequest) {
+	public ResponseEntity<Reservation> createRes(Reservation resRequest) {
 		
 		Reservation r = new Reservation();
 		r.setTitle("Réservé");
@@ -33,7 +43,24 @@ public class ResServiceImp implements ResService {
 		r.setEmail(resRequest.getEmail());
 	    r.setTel(resRequest.getTel());
 	    
+	    //compaire hi/hf
 	    r.setDate(resRequest.getDate());
+	    
+	    try {
+			java.sql.Time d = new java.sql.Time(formatter.parse(resRequest.getHi()).getTime());
+			java.sql.Time f = new java.sql.Time(formatter.parse(resRequest.getHf()).getTime());
+			
+			
+			
+			if(d.after(f)) {
+				throw new UsernameNotFoundException("Heure début est inferieur à heure fin");
+			}
+			
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	    r.setHi(resRequest.getHi());
 	    r.setHf(resRequest.getHf());
 	    
@@ -49,8 +76,8 @@ public class ResServiceImp implements ResService {
 		r.setBorderColor("#8732de");
 		
 		Reservation newR = res.save(r);
+		throw new UsernameNotFoundException("Réservation réussi");
 		
-		return newR;
 	}
 
 	@Override
