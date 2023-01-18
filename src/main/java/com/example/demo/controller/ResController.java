@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.models.Event;
 import com.example.demo.models.Reservation;
-
+import com.example.demo.repository.ResRepository;
 import com.example.demo.service.ResService;
 
 
@@ -30,6 +30,10 @@ public class ResController {
 	@Autowired
 	
 	ResService rs;
+	
+	@Autowired
+	
+	ResRepository rr;
 
 	@PostMapping
 	public  ResponseEntity<Reservation> createEmploye(@RequestBody Reservation resRequest) {
@@ -66,5 +70,19 @@ public class ResController {
 	  
 	  return new ResponseEntity<List<Event>>(demResponses,
 	  HttpStatus.OK); }
+	
+	@GetMapping(path = "/test")
+	  public ResponseEntity<List<Reservation>>
+	  getbyiddate() {
+	  
+	  List<Reservation> demResponses =rr.findAllByTerrIdAndDate("353", "2023-01-19");
+	  
+	  
+	  
+	  
+	  
+	  return new ResponseEntity<List<Reservation>>(demResponses,
+	  HttpStatus.OK); }
+	
 	
 }

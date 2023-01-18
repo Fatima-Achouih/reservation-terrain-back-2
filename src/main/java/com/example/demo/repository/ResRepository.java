@@ -12,6 +12,9 @@ import com.example.demo.models.Reservation;
 public interface ResRepository extends JpaRepository<Reservation, Long>{
 	
 	List<Reservation> findAllByTerrId(String id);
+	
+	List<Reservation> findAllByTerrIdAndDate(String id,String date);
+	
 
 
 }

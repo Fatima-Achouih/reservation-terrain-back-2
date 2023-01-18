@@ -46,8 +46,6 @@ public class ResServiceImp implements ResService {
 	    r.setTel(resRequest.getTel());
 	    
 	    //compaire hi/hf
-	    
-	    
 	    try {
 			java.sql.Time d = new java.sql.Time(formatter.parse(resRequest.getHi()).getTime());
 			java.sql.Time f = new java.sql.Time(formatter.parse(resRequest.getHf()).getTime());
@@ -64,14 +62,28 @@ public class ResServiceImp implements ResService {
 			e.printStackTrace();
 		}
 	    
-	    //compaire date
 	    
-	   
+	    
+	    //compaire date
 	    LocalDate date = LocalDate.parse(resRequest.getDate(), form);
 	    
 	    if(date.isBefore(java.time.LocalDate.now())) {
 	    	throw new UsernameNotFoundException("Entrez une date valide");
 	    }
+	    
+	    
+	  //compaire res dates/hours
+	    
+	    try {
+			if(dispo(resRequest.getTerrId(), resRequest.getDate(), resRequest.getHi(),resRequest.getHf())==false) {
+				
+				throw new UsernameNotFoundException("pas dispo");
+			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
 	    r.setDate(resRequest.getDate());
 	    
 	    r.setHi(resRequest.getHi());
@@ -124,6 +136,31 @@ for(Reservation r: ters) {
 		return events;
 	}
 	
-	
+	//||(hi.after(ji)&&jf.before(hf))||(ji.after(hi)&& jf.after(hf))
+	public boolean dispo(String id, String date, String ti, String tf) throws ParseException {
+		java.sql.Time ji = new java.sql.Time(formatter.parse(ti).getTime());
+		java.sql.Time jf = new java.sql.Time(formatter.parse(tf).getTime());
+		
+		List<Reservation>rv= res.findAllByTerrIdAndDate(id, date);
+		for(Reservation r: rv) {
+			
+			java.sql.Time hi = new java.sql.Time(formatter.parse(r.getHi()).getTime());
+			java.sql.Time hf = new java.sql.Time(formatter.parse(r.getHf()).getTime());
+			if(((ji.after(hi)|| ji.equals(hi))&& (jf.before(hf)||jf.equals(hf)))) {
+				return false;
+			}
+			else if((ji.after(hi)&& ji.before(hf)&& hf.before(jf))) {
+				return false;
+			}
+			else if((hi.after(ji)&& hi.before(jf)&& jf.before(hf))) {
+				return false;
+			}
+			if(((ji.before(hi)|| ji.equals(hi))&& (jf.after(hf)||jf.equals(hf)))) {
+				return false;
+			}
+		}
+		return true;
+		
+	}
 
 }
